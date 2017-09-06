@@ -12,7 +12,7 @@ def self.new_by_filename(parsed_song_name)
   song = Song.new
 
   song.artist = parsed_song_name.split(' - ')[0]
-  Artist.add_artist_if_doesnt_exist(song.artist)
+  Artist.find_or_create_by_name(song.artist)
 
   song.name = parsed_song_name.split(' - ')[1]
   song.genre = parsed_song_name.split(' - ')[2]
