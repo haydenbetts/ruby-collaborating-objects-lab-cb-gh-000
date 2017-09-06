@@ -6,10 +6,20 @@ class MP3Importer
     @path = path
   end
 
+  def path
+    @path
+  end
+
   # this should return an array with every file in the path
   def files
-    # Where the folder variable is the path to the root folder
-    Dir.glob("#{@path}/*.mp3")
+
+    # create array with every file in it
+    all_mp3s = Dir.glob("#{self.path}/*.mp3")
+
+    # normalize the names of those files to remove path
+    all_mp3s.collect do |filename|
+      File.basename(filename)
+    end
   end
 
   # this should make use of methods in the song class to create new instances
@@ -17,11 +27,9 @@ class MP3Importer
 
 
   def import
-  #  @parsed_file_names = []
-  #  self.files.each do |file_name|
-  #    @parse_file_names << file_name.scan(/mp3s\/(.+).mp3/)
-  #  end
-  #  @parsed_file_names
+    self.files.each do |filename|
+      Song.new_by_filename(filename)
+    end
   end
 
 end
